@@ -36,7 +36,21 @@ class Client:
             'end_time'
         ], index=range(len(raw_records)))
 
+        # force types
+        logs_dataframe = logs_dataframe.astype({
+            'station_name': 'object',
+            'liters': 'float64',
+            'liters_per_minute': 'float64',
+            'duration_seconds': 'float64',
+            'start_time': 'datetime64',
+            'end_time': 'datetime64'
+        })
+
         for raw_record_index, raw_record in enumerate(raw_records):
+
+            # skip rain delay
+            if raw_record[1] == 'rd':
+                continue
 
             station_name = station_names[raw_record[1]]
             duration_seconds = raw_record[2]
