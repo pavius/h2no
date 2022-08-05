@@ -14,6 +14,7 @@ class Client:
     def create_report(self, days, output_path):
         # get the logs
         logs_df = self._controller_client.get_logs(days)
+        self._print_dataframe(logs_df)
 
         # create a pdf output
         pdf = matplotlib.backends.backend_pdf.PdfPages(output_path)
